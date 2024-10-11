@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-
+/**
+* @OA\Info(title="API Usuarios", version="1.0")
+*
+* @OA\Server(url="http://swagger.local")
+*/
 class ProductController extends Controller
 {
     /**
@@ -24,8 +28,19 @@ class ProductController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
+    * @OA\POST(
+    *     path="/api/product",
+    *     summary="Guarda a los productos en base de datos",
+    *     @OA\Response(
+    *         response=200,
+    *         description="Productos guardados!!."
+    *     ),
+    *     @OA\Response(
+    *         response="default",
+    *         description="Ha ocurrido un error."
+    *     )
+    * )
+    */
     public function store(Request $request)
     {
         $product=Product::create(["name"=>"test","price"=>123]);
