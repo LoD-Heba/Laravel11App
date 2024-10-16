@@ -16,7 +16,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::all();
+        return response()->json($products);
     }
 
     /**
@@ -44,6 +45,9 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $product=Product::create(["name"=>"test","price"=>123]);
+        return response()->json([
+            "mensaje"=>"Datos guardados!!"
+        ]);
     }
 
     /**

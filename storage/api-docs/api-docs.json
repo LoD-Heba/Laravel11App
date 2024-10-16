@@ -10,13 +10,13 @@
         }
     ],
     "paths": {
-        "/api/users": {
+        "/api/product": {
             "post": {
-                "summary": "Mostrar usuarios",
-                "operationId": "fd9be3edd938ff8c8cbdcc4c393598b5",
+                "summary": "Guarda a los productos en base de datos",
+                "operationId": "1d0b0d8724685b7b8f9d87f403bfc4df",
                 "responses": {
                     "200": {
-                        "description": "Mostrar todos los usuarios."
+                        "description": "Productos guardados!!."
                     },
                     "default": {
                         "description": "Ha ocurrido un error."
