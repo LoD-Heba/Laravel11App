@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use Illuminate\Http\Request;
 /**
@@ -10,7 +11,8 @@ use Illuminate\Http\Request;
 * @OA\Server(url="http://swagger.local")
 */
 class ProductController extends Controller
-{
+{    
+    
     /**
      * Display a listing of the resource.
      */

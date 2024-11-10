@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Validator;
+use App\Http\Requests\UserLoginRequest;
 
 class UserController extends Controller
 {
@@ -28,19 +29,27 @@ class UserController extends Controller
   
         return response()->json($user, 201);
     }
-    public function login()
+    public function login(UserLoginRequest $request)
     {
-        $credentials = request(['email', 'password']);
-  
-        if (! $token = auth('api')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        $validated = $request->validated();
+        $token = auth('api')->attempt($validated);
+        if($token)
+        {
+            $user=auth('api')->user();
+            $response = [
+                "email"=>$user->email,
+                "token"=>$token,
+                "id" =>$user->id                
+            ];
+            return $this->jsonControllerResponse( $response,200,true);
         }
-        $user=auth('api')->user();
-        $body=[
-            "name"=>$user->name,
-            "email"=>$user->email,
-            "token"=>$token
-        ];
-        return response()->json($body);
+        else
+        {
+            $response = [
+                "mensaje"=>"Email o password incorrectos"                
+            ];
+            return $this->jsonControllerResponse( $response,403,false);
+        }
+        //return json_encode($response);
     }
 }

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\JWTAuthentication;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
@@ -12,7 +13,7 @@ Route::get('/user', function (Request $request) {
 Route::post('userSignup',[UserController::class,'register']);
 Route::post('userLogin',[UserController::class,'login']);
 
-Route::middleware('api')->group(function () {
+Route::middleware(['api', JWTAuthentication::class])->group(function () {
     Route::resource('product',ProductController::class);
 });
 
