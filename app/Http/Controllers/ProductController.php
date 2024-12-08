@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 /**
 * @OA\Info(title="API Usuarios", version="1.0")
 *
@@ -19,7 +20,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return response()->json($products);
+        return $this->jsonControllerResponse( $products,200,true);
     }
 
     /**
@@ -46,10 +47,21 @@ class ProductController extends Controller
     */
     public function store(Request $request)
     {
-        $product=Product::create(["name"=>"test","price"=>123]);
-        return response()->json([
-            "mensaje"=>"Datos guardados!!"
-        ]);
+        $product = Product::create(['name'=>$request->name,'price'=>$request->price,'category_id'=>$request->category_id]);
+
+        $image = $request->file('url_image');
+        $imageName = time() . '.' . $image->extension();
+        Storage::disk('public')->put('products/'.$imageName, file_get_contents($image));
+        $product->url_image=$imageName;
+
+        $product->save();
+        $response = [
+            'Mensaje'=>'Datos guardados!!!'
+        ];
+        return $this->jsonControllerResponse( $response,201,true);
+        /*return response()->json([
+            'Mensaje'=>'Datos guardados!!!'
+        ]);*/
     }
 
     /**
