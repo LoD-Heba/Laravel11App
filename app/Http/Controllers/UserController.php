@@ -10,6 +10,7 @@ use App\Http\Requests\UserLoginRequest;
 
 class UserController extends Controller
 {
+    
     public function register() {
         $validator = Validator::make(request()->all(), [
             'name' => 'required',
@@ -29,6 +30,8 @@ class UserController extends Controller
   
         return response()->json($user, 201);
     }
+
+
     public function login(UserLoginRequest $request)
     {
         $validated = $request->validated();
