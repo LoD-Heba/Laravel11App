@@ -19,6 +19,9 @@ Route::post('userLogin',[UserController::class,'login']);
 Route::middleware(['api', JWTAuthentication::class])->group(function () {
     //Route::resource('product',ProductController::class);
 });
+Route::get('/test', function () {
+    return response()->json(['message' => 'Conexión exitosa!']);
+});
 
 Route::group([
     'middleware' => 'api',
